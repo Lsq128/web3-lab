@@ -205,7 +205,7 @@ export default function ExplorerPage() {
       <div>
         <h1 className="text-2xl font-bold">链上查询</h1>
         <p className="mt-1 text-sm text-white/60">
-          输入 Tx / 地址 / 区块号，快速查看链上数据（当前为 UI 骨架 + 占位）。
+          输入 Tx / 地址 / 区块号，快速查看链上数据。
         </p>
       </div>
 
