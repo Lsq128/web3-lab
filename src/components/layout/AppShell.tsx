@@ -18,8 +18,8 @@ import type { ReactNode } from "react";
 
 const navItems = [
   { label: "概览 / Dashboard", href: "/" },
-  { label: "链上查询", href: "/explorer" },
   { label: "币币交易", href: "/swap" },
+  { label: "链上查询", href: "/explorer" },
   { label: "工具 / 设置", href: "/tools" },
 ] as const;
 
