@@ -2,7 +2,7 @@
 
 一个基于 Next.js App Router 的 Web3 学习 / 实验前端项目，用来练习钱包连接、链上查询、简单转账等常见场景。
 
-> 仓库地址（占位，待补充）：[`https://github.com/Lsq128/web3-lab`](https://github.com/Lsq128/web3-lab)
+> 仓库地址：[`https://github.com/Lsq128/web3-lab`](https://github.com/Lsq128/web3-lab)
 
 ---
 
@@ -31,9 +31,6 @@
     - 区块信息
   - 通过本地 API Route 代理 Etherscan，获取地址的最近交易列表。
 
-- **工具 / 设置 / Tools**
-  - 一些实验性工具与配置占位。
-
 ---
 
 ## 技术栈
@@ -60,7 +57,7 @@ pnpm install
 
 ### 2. 环境变量
 
-在项目根目录创建 `.env.local`，示例（占位，按需修改）：
+在项目根目录创建 `.env.local`：
 
 ```bash
 NEXT_PUBLIC_APP_NAME="Web3 Lab"
@@ -111,5 +108,5 @@ src/
 
 该项目主要用于个人学习
 
-- 仓库地址占位：`https://github.com/Lsq128/web3-lab`
+- 仓库地址：`https://github.com/Lsq128/web3-lab`
 
