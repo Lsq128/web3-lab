@@ -6,18 +6,32 @@ import {
   CardBody,
   CardHeader,
   Chip,
+  Dropdown,
+  DropdownItem,
+  DropdownMenu,
+  DropdownTrigger,
   Spinner,
 } from "@heroui/react";
 import { ConnectButton } from "@rainbow-me/rainbowkit";
-import { useConnection, useBalance, useChainId, useChains } from "wagmi";
+import {
+  useConnection,
+  useBalance,
+  useChainId,
+  useChains,
+  useSwitchChain,
+} from "wagmi";
 import { formatEther } from "viem";
 import { useMemo } from "react";
+import { wagmiConfig } from "@/lib/web3/wagmi";
 
 
 export default function Home() {
   const { address, isConnected } = useConnection();
   const chains = useChains();
   const chainId = useChainId();
+  const { mutate: switchChain, isPending: isSwitchingChain } = useSwitchChain({
+    config: wagmiConfig,
+  });
   const {
     data: balance,
     isLoading: isBalanceLoading,
@@ -107,11 +121,52 @@ export default function Home() {
             <h2 className="text-sm font-medium text-white/70">当前网络</h2>
           </CardHeader>
           <CardBody className="pt-2">
-            <div className="flex items-center gap-2">
-              <div className="h-2 w-2 rounded-full bg-green-500" />
-              <p className="text-lg font-semibold">{chainName}</p>
+            <div className="flex items-center justify-between gap-3">
+              <div className="min-w-0">
+                <div className="flex items-center gap-2">
+                  <div className="h-2 w-2 rounded-full bg-green-500" />
+                  <p className="truncate text-lg font-semibold">{chainName}</p>
+                </div>
+                <p className="mt-1 text-xs text-white/50">Chain ID: {chainId}</p>
+              </div>
+
+              <Dropdown>
+                <DropdownTrigger>
+                  <Button
+                    size="sm"
+                    variant="flat"
+                    isLoading={isSwitchingChain}
+                    isDisabled={isSwitchingChain}
+                  >
+                    切换网络
+                  </Button>
+                </DropdownTrigger>
+                <DropdownMenu
+                  aria-label="Switch Network"
+                  disabledKeys={isSwitchingChain ? chains.map((c) => String(c.id)) : []}
+                  onAction={(key) => {
+                    const nextChainId = Number(key);
+                    if (!Number.isFinite(nextChainId)) return;
+                    if (nextChainId === chainId) return;
+                    switchChain?.({ chainId: nextChainId });
+                  }}
+                >
+                  {chains.map((c) => (
+                    <DropdownItem
+                      key={String(c.id)}
+                      className={c.id === chainId ? "text-white" : "text-white/80"}
+                      description={c.id === chainId ? "当前网络" : `Chain ID: ${c.id}`}
+                    >
+                      {c.name}
+                    </DropdownItem>
+                  ))}
+                </DropdownMenu>
+              </Dropdown>
             </div>
-            <p className="mt-1 text-xs text-white/50">Chain ID: {chainId}</p>
+
+            <p className="mt-3 text-xs text-white/50">
+              提示：切链会触发钱包弹窗确认；若钱包未添加该网络，需要先在钱包中添加。
+            </p>
           </CardBody>
         </Card>
 
