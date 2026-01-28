@@ -4,7 +4,6 @@ import {
   Button,
   Card,
   CardBody,
-  Chip,
   Divider,
   Navbar,
   NavbarBrand,
@@ -14,6 +13,7 @@ import {
 import { ConnectButton } from "@rainbow-me/rainbowkit";
 
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import type { ReactNode } from "react";
 
 const navItems = [
@@ -24,6 +24,8 @@ const navItems = [
 ] as const;
 
 export function AppShell({ children }: { children: ReactNode }) {
+  const pathname = usePathname();
+
   return (
     <div className="min-h-screen bg-black text-white">
       <Navbar
@@ -60,8 +62,11 @@ export function AppShell({ children }: { children: ReactNode }) {
               <Divider className="bg-white/10" />
 
               <div className="flex flex-col gap-1">
-                {navItems.map((item, idx) => {
-                  const isActive = idx === 0; // 先做占位，后面用 usePathname 替换
+                {navItems.map((item) => {
+                  const isActive =
+                    item.href === "/"
+                      ? pathname === "/"
+                      : pathname === item.href || pathname.startsWith(`${item.href}/`);
                   return (
                     <Button
                       key={item.href}
