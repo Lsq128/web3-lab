@@ -476,7 +476,7 @@ export default function TradePage() {
 
             {txError && !formError && (
               <div className="rounded-lg border border-red-500/40 bg-red-500/10 p-3 text-xs text-red-100">
-                {txError.shortMessage ||
+                {(txError as any).shortMessage ||
                   txError.message ||
                   "交易提交失败"}
               </div>
