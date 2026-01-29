@@ -148,7 +148,7 @@ export default function Home() {
                     const nextChainId = Number(key);
                     if (!Number.isFinite(nextChainId)) return;
                     if (nextChainId === chainId) return;
-                    switchChain?.({ chainId: nextChainId });
+                    switchChain?.({ chainId: nextChainId as unknown as 1 | 11155111 });
                   }}
                 >
                   {chains.map((c) => (
